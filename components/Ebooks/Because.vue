@@ -27,6 +27,50 @@ const blogs = ref([
   <div
     class="mx-auto w-full px-4 md:px-6 xl:px-0 mt-14 md:mt-16 mb-16 max-w-[1240px]"
   >
+    <h2
+      class="font-bold px-8 lg:px-0 leading-[36px] md:leading-[48px] lg:leading-[54px] mb-5 tracking-[-1.5px] text-2xl md:text-[32px] lg:text-[48px] w-full"
+    >
+      Out Now: A Social Care Provider’s Guide to the 2023 CQC State of Care
+      Report. An Analytical Summary by OC Management Consultants
+    </h2>
+    <p class="leading-[28px] text-lg mt-4">
+      Discover what the
+      <span class="font-bold">2023 CQC State of Care Report</span> means for
+      social care providers like you in our latest guide!
+    </p>
+    <p class="leading-[28px] text-lg mt-4 mb-8">
+      The Care Quality Commission (CQC) released their annual assessment on
+        England’s health and social care sector, which attested to the
+        <span class="font-bold">deteriorating state of care in the country.</span> We have analysed the report
+        from a provider’s lens, and identified key findings that will empower
+        your decisions about service provision and organisational growth.
+    </p>
+
+    <div
+      style="
+        position: relative;
+        padding-top: max(60%, 326px);
+        height: 0;
+        width: 100%;
+      "
+    >
+      <iframe
+        allow="clipboard-write"
+        sandbox="allow-top-navigation allow-top-navigation-by-user-activation allow-downloads allow-scripts allow-same-origin allow-popups allow-modals allow-popups-to-escape-sandbox allow-forms"
+        allowfullscreen="true"
+        style="
+          position: absolute;
+          border: none;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+        "
+        src="https://e.issuu.com/embed.html?backgroundColor=%23043c89&d=report_design_recovered_&u=tgpcmedia"
+      ></iframe>
+    </div>
     <div class="flex justify-start mt-6">
       <div
         class="flex flex-col md:flex-row justify-start items-stretch flex-wrap gap-10 lg:gap-2"
