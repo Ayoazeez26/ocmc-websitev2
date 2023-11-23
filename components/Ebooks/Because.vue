@@ -22,6 +22,13 @@ const blogs = ref([
     image: "book-tender",
   },
 ]);
+
+const phoneNumber = ref("7903094884");
+const message = ref("Hello, I would like to request for the free pdf copy");
+
+const messageUrl = () => {
+  return `https://api.whatsapp.com/send/?phone=%2B44${phoneNumber}&text=${message}%27;`;
+};
 </script>
 <template>
   <div
@@ -38,12 +45,13 @@ const blogs = ref([
       <span class="font-bold">2023 CQC State of Care Report</span> means for
       social care providers like you in our latest guide!
     </p>
-    <p class="leading-[28px] text-lg mt-4 mb-8">
+    <p class="leading-[28px] text-lg my-4">
       The Care Quality Commission (CQC) released their annual assessment on
-        England’s health and social care sector, which attested to the
-        <span class="font-bold">deteriorating state of care in the country.</span> We have analysed the report
-        from a provider’s lens, and identified key findings that will empower
-        your decisions about service provision and organisational growth.
+      England’s health and social care sector, which attested to the
+      <span class="font-bold">deteriorating state of care in the country.</span>
+      We have analysed the report from a provider’s lens, and identified key
+      findings that will empower your decisions about service provision and
+      organisational growth.
     </p>
 
     <div
@@ -71,6 +79,11 @@ const blogs = ref([
         src="https://e.issuu.com/embed.html?backgroundColor=%23043c89&d=report_design_recovered_&u=tgpcmedia"
       ></iframe>
     </div>
+    <p class="leading-[28px] text-lg mt-4 mb-8">
+      <a :href="`https://api.whatsapp.com/send/?phone=%2B44${phoneNumber}&text=${message}%27`" class="underline" target="_blank">Click here</a> to
+      get a free version of the pdf
+    </p>
+
     <div class="flex justify-start mt-6">
       <div
         class="flex flex-col md:flex-row justify-start items-stretch flex-wrap gap-10 lg:gap-2"
