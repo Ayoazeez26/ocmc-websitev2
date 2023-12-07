@@ -36,11 +36,11 @@ const posts = ref([
           </div>
         </div>
         <div class="flex flex-col lg:flex-row gap-10">
-          <nuxt-link to="/blog/id" class="w-full max-w-[612px]">
-            <img
+          <div to="/blog/id" class="w-full max-w-[612px]">
+            <!-- <img
               src="https://s3.eu-west-2.amazonaws.com/ocmc-img.com/book-mockup-1.png"
               alt="book mockup"
-            />
+            /> -->
             <div class="bg-white px-6 py-12">
               <div class="flex flex-col md:flex-row md:items-center gap-6">
                 <div class="flex md:justify-center max-w-fit relative">
@@ -57,16 +57,61 @@ const posts = ref([
                   </nuxt-link>
                 </div>
                 <div class="flex gap-6 items-center">
-                  <p class="text-blue">April 23, 2023</p>
+                  <p class="text-blue">December 6, 2023</p>
                   <div class="w-2 h-9 bg-blue-4" />
-                  <p class="text-blue">By Mrs Obi</p>
+                  <p class="text-blue">By Olaoluwa Oluwadun</p>
                 </div>
               </div>
-              <h2 class="font-bold text-2xl max-w-[483px] mt-6">
-                SUPPORTED LIVING: MORE THAN PROVIDING A HOUSE AND A SERVICE
+              <h2 class="font-bold text-2xl uppercase max-w-[483px] mt-6 mb-4">
+                UK's New Immigration Policy Update
               </h2>
+              <p class="mb-1">
+                On Monday, December 4th, 2023, the UK Government launched a new
+                immigration policy.
+              </p>
+
+              <p class="mb-1">
+                The policy is part of a 5-point plan aimed to control net
+                migration, which according to Home Secretary James Cleverly MP,
+                is alarmingly high
+              </p>
+
+              <p class="mb-1">
+                This comes after a surge in net migration rates since COVID-19
+                hit. In 2022, net migration hit a record high of 745,000.
+                Although we saw a 10% drop in 2023 to just over 672,000, these
+                figures still reflect a significant number of immigrants. The
+                impact on our healthcare sector is immense.
+              </p>
+
+              <p class="mb-4">Read more about it below</p>
+              <div
+                style="
+                  position: relative;
+                  padding-top: max(60%, 326px);
+                  height: 0;
+                  width: 100%;
+                "
+              >
+                <iframe
+                  allow="clipboard-write"
+                  sandbox="allow-top-navigation allow-top-navigation-by-user-activation allow-downloads allow-scripts allow-same-origin allow-popups allow-modals allow-popups-to-escape-sandbox allow-forms"
+                  allowfullscreen="true"
+                  style="
+                    position: absolute;
+                    border: none;
+                    width: 100%;
+                    height: 100%;
+                    left: 0;
+                    right: 0;
+                    top: 0;
+                    bottom: 0;
+                  "
+                  src="https://e.issuu.com/embed.html?backgroundColor=%2304346c&d=immigration_policy_-_ocmc&u=tgpcmedia"
+                ></iframe>
+              </div>
             </div>
-          </nuxt-link>
+          </div>
           <div class="flex flex-col gap-6">
             <div
               v-for="(post, index) in posts"
