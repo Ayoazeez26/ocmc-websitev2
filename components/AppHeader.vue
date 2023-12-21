@@ -1,20 +1,21 @@
 <template>
   <div
     class="fixed right-0 left-0 top-0 font-medium text-white z-10 px-4 md:px-6 xl:px-0"
-    :class="dataStore.scrolled ? 'bg-blue-3 py-0' : 'bg-transparent py-6 mt-10'"
+    :class="dataStore.scrolled ? 'bg-blue nav-bg py-0' : 'bg-transparent py-6 mt-10'"
   >
     <div
-      class="bg-blue-3 flex h-24 md:h-[88px] items-center justify-between px-6 px-md-0 w-full max-w-[1240px] rounded-xl mx-auto"
+      class="nav-bg flex h-24 md:h-[88px] items-center justify-between px-6 px-md-0 w-full max-w-[1240px] rounded-xl mx-auto"
     >
       <nuxt-link to="/">
         <img class="w-[50px] md:w-20 h-[50px] md:h-20" src="/svg/logo.svg" />
       </nuxt-link>
       <div class="lg:hidden flex gap-x-4">
-        <button
+        <a
+          herf="https://healthandsocialcaretenders.co.uk/"
           class="hidden md:block bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2"
         >
-          Request Service
-        </button>
+          Visit Portal
+        </a>
         <button ref="hamburger" class="lg:hidden" @click="open = !open">
           <Icon name="ic:round-menu" size="24px" color="#FFF" />
         </button>
@@ -40,7 +41,7 @@
           class="flex flex-col lg:flex-row lg:items-center gap-4 mt-10 lg:mt-0 lg:gap-10"
         >
           <!-- <li @click="open = !open"><nuxt-link to="/">Home</nuxt-link></li> -->
-          <li @click="careServicesToggled">
+          <!-- <li @click="careServicesToggled">
             <p
               class="hover:text-blue-4 cursor-pointer"
               :class="
@@ -56,18 +57,19 @@
                 color="#FFFFFF"
               />
             </p>
-          </li>
+          </li> -->
           <li @click="aboutUsToggled">
             <p
               class="hover:text-blue-4 cursor-pointer"
               :class="route.name === 'about' ? 'text-blue-4' : ''"
             >
-              About Us<Icon
+              About Us
+              <!-- <Icon
                 class="ml-1"
                 name="ic:round-keyboard-arrow-down"
                 size="24px"
                 color="#FFFFFF"
-              />
+              /> -->
             </p>
           </li>
           <li @click="trainingToggled">
@@ -75,7 +77,7 @@
               class="hover:text-blue-4 cursor-pointer"
               :class="route.name === 'training' ? 'text-blue-4' : ''"
             >
-              Training & Events
+              Services
               <Icon
                 class="ml-1"
                 name="ic:round-keyboard-arrow-down"
@@ -95,7 +97,7 @@
             <nuxt-link
               to="/blog"
               :class="route.name === 'blog' ? 'text-blue-4' : ''"
-              >News</nuxt-link
+              >Webinars</nuxt-link
             >
           </li>
           <div
@@ -104,7 +106,7 @@
             <button
               class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2"
             >
-              Request Service
+              Visit Portal
             </button>
           </div>
         </ul>
@@ -160,9 +162,9 @@
       </ul>
       <div class="hidden lg:flex">
         <button
-          class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2"
+          class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2 w-[177px]"
         >
-          Request Service
+          Visit Portal
         </button>
       </div>
     </div>
@@ -202,6 +204,9 @@ if (typeof window !== "undefined") {
 </script>
 
 <style lang="scss" scoped>
+.nav-bg {
+  background-color: rgba(250, 255, 255, 0.06);
+}
 .backdrop {
   background: rgba(0, 29, 64, 0.24);
   backdrop-filter: blur(20px);

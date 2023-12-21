@@ -5,6 +5,7 @@
     <AboutUsDropdown v-if="dataStore.about" />
     <TrainingDropdown v-if="dataStore.training" />
     <HomeHero />
+    <HomeBanner />
     <HomeServices />
     <HomeAbout />
     <HomeTestimonials />

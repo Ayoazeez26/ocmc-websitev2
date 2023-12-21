@@ -1,97 +1,223 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+const { $gsap, $ScrollTrigger, $TweenMax } = useNuxtApp();
+
+const mm = $gsap.matchMedia();
+const halfLogo = ref(null);
+
+const ctx = $gsap.context(() => {});
+onUnmounted(() => {
+  ctx.revert();
+});
+const items = ref([]);
+onMounted(() => {
+  setTimeout(() => {
+    console.log("mounted");
+    // $ScrollTrigger.refresh();
+  }, 1000);
+  ctx.add(() => {
+    mm.add("(min-width: 1024px)", () => {
+      const allCardItems = [...document.querySelectorAll(".childItem")];
+      items.value = [];
+      allCardItems.forEach((item) => items.value.push(newCardItem(item)));
+      // loader();
+    });
+  });
+});
+
+const newCardItem = (el) => {
+  const DOM = { el: el };
+  DOM.inactiveCount = DOM.el.querySelector(".inactiveCount");
+  DOM.activeCount = DOM.el.querySelector(".activeCount");
+  DOM.activeText = DOM.el.querySelector(".activeText");
+  DOM.activeHeader = DOM.el.querySelector(".activeText h3");
+  DOM.cardDesc = DOM.el.querySelector(".cardDesc");
+  DOM.el.addEventListener("mouseenter", () => {
+    setActive(DOM);
+  });
+  DOM.el.addEventListener("mouseleave", () => {
+    console.log("left");
+    setInactive(DOM);
+  });
+  console.log("DOM is => ", DOM);
+  return DOM;
+};
+
+const setActive = (item) => {
+  console.log("entered", item.el);
+  const TLLOAD = $gsap.timeline({
+    default: {
+      ease: "easeInOut",
+    },
+  });
+
+  TLLOAD.to(item.activeHeader, {
+    maxWidth: "100%",
+    width: "auto",
+    fontSize: "32px",
+    fontWeight: "bold",
+  })
+    .to(item.el, { width: "606px", minWidth: "606px" }, "<")
+    .to(item.activeCount, { autoAlpha: 1 }, "<")
+    .to(item.inactiveCount, { autoAlpha: 0 }, "<")
+    .to(item.activeText, { y: 0 }, "<")
+    .add(() => {
+      item.el.classList.add("active");
+      item.el.classList.remove("border-l-grey-7");
+      // item.activeHeader.style.maxWidth = '100%';
+    }, "<");
+};
+
+const setInactive = (item) => {
+  const TLLOAD = $gsap.timeline({
+    default: {
+      // ease: "none",
+    },
+  });
+
+  TLLOAD.to(item.el, { width: "343px", minWidth: "343px", duration: 0.1 })
+    .to(item.activeCount, { autoAlpha: 0 }, "<")
+    .to(item.inactiveCount, { autoAlpha: 1 }, "<")
+    .to(item.activeText, { y: "192px" }, "<")
+    .to(
+      item.activeHeader,
+      { maxWidth: "179px", fontSize: "24px", fontWeight: "400" },
+      "<"
+    )
+    .add(() => {
+      item.el.classList.remove("active");
+      item.el.classList.add("border-l-grey-7");
+      // item.activeHeader.style.maxWidth = '179px';
+    }),
+    "<";
+};
+</script>
 <template>
-  <div
-    class="flex flex-col mt-[160px] lg:mt-[350px] mx-auto px-4 md:px-6 xl:px-0 w-full max-w-[1240px]"
-  >
+  <div class="bg-blue-8 flex flex-col py-[60px] lg:py-[120px] w-full">
     <div
-      class="flex text-center lg:text-left lg:flex-row items-center lg:items-start justify-between w-full"
+      class="flex flex-col mx-auto px-4 md:px-6 xl:px-0 justify-between w-full max-w-[1240px]"
     >
-      <h2
-        class="font-bold px-8 lg:px-0 leading-[36px] md:leading-[48px] lg:leading-[54px] tracking-[-1.5px] text-2xl md:text-[32px] lg:text-[48px] w-full"
+      <div class="flex justify-between items-start w-full">
+        <div class="">
+          <p class="text-blue-4 mb-2">Services</p>
+          <h2
+            class="font-bold text-black-2 leading-[36px] md:leading-[48px] lg:leading-[120%] tracking-[-1.5px] text-2xl md:text-[32px] lg:text-[40px] w-full max-w-[584px]"
+          >
+            Streamline Your Operations with OCMC's Services
+          </h2>
+        </div>
+        <div class="hidden lg:flex justify-center min-w-max">
+          <nuxt-link
+            to="/services"
+            class="bg-blue-9 blue-btn text-white rounded-lg py-4 px-8 w-[210px] text-center"
+          >
+            See Services
+            <!-- <Icon class="hovered ml-4" name="mdi:arrow-right" size="18px" /> -->
+          </nuxt-link>
+        </div>
+      </div>
+      <div
+        class="child mt-12 flex flex-col md:flex-row gap-2.5 overflow-x-auto overflow-y-hidden w-full relative"
       >
-        We Guide Businesses To <span class="text-blue-4">Achieve Success</span>
-      </h2>
-      <!-- <p class="mt-3 lg:mt-0 md:text-lg w-full max-w-[523px]">We understand that navigating complex regulations can be a daunting task, but we are here to help. Our team of experienced consultants has a proven track record of success in helping organizations win tenders, secure funding, and comply with regulations.</p> -->
-      <div class="hidden lg:flex justify-center min-w-max">
-        <nuxt-link
-          to="/services"
-          class="bg-blue-4 blue-btn text-white rounded py-4 px-8"
+        <div
+          class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
         >
-          More Services
-          <Icon class="hovered ml-4" name="mdi:arrow-right" size="18px" />
-        </nuxt-link>
-      </div>
-    </div>
-    <div
-      class="child mt-12 flex flex-col md:flex-row gap-5 md:gap-[13px] overflow-x-auto overflow-y-hidden w-full relative"
-    >
-      <div
-        class="bg-blue text-whiter min-w-[343px] w-[343px] rounded-xl flex flex-col justify-between md:min-w-[397px] md:w-[397px] relative"
-      >
-        <img
-          class="rounded-t-xl"
-          src="https://s3.eu-west-2.amazonaws.com/ocmc-img.com/service1.png"
-          alt="competence icon"
-        />
-        <div class="flex flex-col px-8 py-10">
-          <p class="font-semibold text-lg uppercase mb-6">
-            Growth and diversification
-          </p>
-          <!-- <p class="text-lg my-2">
+          <div class="relative">
+            <div
+              ref="activeCount"
+              class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+            >
+              <img src="/img/01.png" alt="01" />
+            </div>
+            <p
+              ref="inactiveCount"
+              class="inactiveCount absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+            >
+              01
+            </p>
+          </div>
+
+          <div
+            ref="activeText"
+            class="activeText flex flex-col translate-y-48 pr-8 py-10 mt-16"
+          >
+            <h3 class="text-grey-7 text-[24px] font-medium mb-8 max-w-[179px]">
+              Tender Writing
+            </h3>
+            <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-          <ul class="white-list list-inside flex flex-col gap-4">
-            <li>Market demand forecasting</li>
-            <li>Diversification of services</li>
-            <li>Market entry strategy</li>
-            <li>Enabling investment opportunities</li>
-          </ul>
+            <p class="cardDesc text-2xl text-grey-3">
+              Choose from flexible payment options, bulk Purchases
+            </p>
+          </div>
         </div>
-      </div>
-      <div
-        class="bg-grey-2 min-w-[343px] w-[343px] flex flex-col justify-between rounded-xl md:min-w-[397px] md:w-[397px] relative"
-      >
-        <img
-          class="rounded-t-xl"
-          src="https://s3.eu-west-2.amazonaws.com/ocmc-img.com/service2.png"
-          alt="competence icon"
-        />
-        <div class="flex flex-col px-8 py-10">
-          <p class="font-semibold text-lg uppercase mb-6">
-            License Acquisition
-          </p>
-          <!-- <p class="text-lg my-2">
+        <div
+          class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+        >
+          <div class="relative">
+            <div
+              ref="activeCount"
+              class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+            >
+              <img src="/img/02.png" alt="02" />
+            </div>
+            <p
+              ref="inactiveCount"
+              class="inactiveCount absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+            >
+              02
+            </p>
+          </div>
+
+          <div
+            ref="activeText"
+            class="activeText flex flex-col translate-y-48 pr-8 py-10 mt-16"
+          >
+            <h3 class="text-grey-7 text-[24px] font-medium mb-6 max-w-[179px]">
+              Tender Sourcing
+            </h3>
+            <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-          <ul class="blue-list list-inside flex flex-col gap-4">
-            <li>CQC, RQIA, CIW, Ofsted</li>
-            <li>Application Support</li>
-            <li>Manager interview preparation</li>
-            <li>Document preparation</li>
-          </ul>
+            <p class="cardDesc text-2xl text-grey-3">
+              Find suitable tenders or your organisation TODAY! Call us or sign
+              up to your portal.
+            </p>
+          </div>
         </div>
-      </div>
-      <div
-        class="bg-grey-2 min-w-[343px] w-[343px] flex flex-col justify-between rounded-xl md:min-w-[397px] md:w-[397px] relative"
-      >
-        <img
-          class="rounded-t-xl"
-          src="https://s3.eu-west-2.amazonaws.com/ocmc-img.com/service3.png"
-          alt="competence icon"
-        />
-        <div class="flex flex-col px-8 py-10">
-          <p class="font-semibold text-lg uppercase mb-6">
-            Process Improvement
-          </p>
-          <!-- <p class="text-lg my-2">
+        <div
+          class="childItem bg-transparent border pt-10 border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+        >
+          <div class="relative">
+            <div
+              ref="activeCount"
+              class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+            >
+              <img src="/img/03.png" alt="03" />
+            </div>
+            <p
+              ref="inactiveCount"
+              class="inactiveCount absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+            >
+              03
+            </p>
+          </div>
+
+          <div
+            ref="activeText"
+            class="activeText flex flex-col translate-y-40 pr-8 py-10 mt-20"
+          >
+            <h3 class="text-grey-7 text-[24px] font-medium mb-6 max-w-[179px]">
+              Market Analysis (Commissioned analytics)
+            </h3>
+            <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-          <ul class="blue-list list-inside flex flex-col gap-4">
-            <li>Quality audits</li>
-            <li>Rating improvement service</li>
-            <li>Mock inspections</li>
-            <li>Action plan development</li>
-          </ul>
+            <p class="cardDesc text-2xl text-grey-3">
+              Gain insights to stay ahead and access new market for the growth
+              and sustainability of your business
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -132,5 +258,26 @@ li::before {
   content: "";
   display: inline-block;
   background-image: url();
+}
+
+.active {
+  padding-left: 46px;
+  background-color: $grey-4;
+  border-left-width: 12px;
+  border-color: $blue-6;
+  border-left-color: $blue-9;
+  // width: 343px;
+  // min-width: 343px;
+  // @media (min-width: 768px) {
+  //   width: 606px;
+  //   min-width: 606px;
+  // }
+  h3 {
+    color: $blue-9;
+    // font-size: 32px;
+    // font-weight: bold;
+    // width: auto;
+    // max-width: 100%;
+  }
 }
 </style>
