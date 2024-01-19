@@ -3,6 +3,9 @@ const { $gsap, $ScrollTrigger, $TweenMax } = useNuxtApp();
 
 const mm = $gsap.matchMedia();
 const halfLogo = ref(null);
+const firstSlide = ref(null);
+const secondSlide = ref(null);
+const hideLeftShowRight = ref(true);
 
 const ctx = $gsap.context(() => {});
 onUnmounted(() => {
@@ -38,7 +41,7 @@ const newCardItem = (el) => {
     console.log("left");
     setInactive(DOM);
   });
-  console.log("DOM is => ", DOM);
+  // console.log("DOM is => ", DOM);
   return DOM;
 };
 
@@ -51,14 +54,14 @@ const setActive = (item) => {
   });
 
   TLLOAD.to(item.activeHeader, {
-    maxWidth: "606px",
+    maxWidth: "558px",
     width: "auto",
     fontSize: "32px",
     fontWeight: "bold",
     ease: "none",
     duration: 0.1,
   })
-    .to(item.el, { width: "606px", minWidth: "606px" }, "<")
+    .to(item.el, { width: "558px", minWidth: "558px" }, "<")
     .to(item.activeCount, { autoAlpha: 1 }, "<")
     .to(item.inactiveCount, { autoAlpha: 0 }, "<")
     .to(item.activeText, { y: 0 }, "<")
@@ -92,14 +95,37 @@ const setInactive = (item) => {
     ),
     "<";
 };
+
+const slideFromLeft = () => {
+  const TLLeft = $gsap.timeline();
+
+  TLLeft.to(secondSlide.value, { duration: 0.6, x: "110%" }).to(
+    firstSlide.value,
+    { duration: 0.6, x: 0 },
+    "<"
+  );
+  hideLeftShowRight.value = true;
+};
+const slideFromRight = () => {
+  const TLRight = $gsap.timeline();
+
+  TLRight.to(firstSlide.value, { duration: 0.6, x: "-100%" }).to(
+    secondSlide.value,
+    { duration: 0.6, x: 0 },
+    "<"
+  );
+  hideLeftShowRight.value = false;
+};
 </script>
 <template>
-  <div class="bg-blue-8 flex flex-col py-[60px] lg:py-[120px] w-full">
+  <div
+    class="bg-blue-8 flex flex-col py-[60px] lg:py-[120px] w-full overflow-hidden relative"
+  >
     <div
       class="flex flex-col mx-auto px-4 md:px-6 xl:px-0 justify-between w-full"
     >
       <div
-        class="flex justify-between items-start w-full max-w-[1240px] mx-auto"
+        class="flex justify-between items-start w-full max-w-[1302px] mx-auto"
       >
         <div class="">
           <p class="text-blue-4 mb-2">Services</p>
@@ -119,122 +145,233 @@ const setInactive = (item) => {
           </nuxt-link>
         </div>
       </div>
-      <div class="flex mt-12 w-full max-w-[1440px] mx-auto">
-        <button class="bg-blue-4/10 h-[410px] w-[42px]">
+      <div class="flex mt-12 w-full max-w-[1382px] mx-auto">
+        <button v-if="!hideLeftShowRight" @click="slideFromLeft" class="bg-blue-4/10 h-[410px] w-[42px]">
           <img class="rotate-180" src="/svg/left-arrow.svg" alt="arrow-left" />
         </button>
-        <div
-          class="child flex flex-col md:flex-row gap-2.5 overflow-x-hidden overflow-y-hidden w-full max-w-[1240px] mx-auto relative"
-        >
+        <div class="w-full relative overflow-hidden">
           <div
-            class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+            ref="firstSlide"
+            class="child absolute flex flex-col md:flex-row gap-2.5 overflow-x-hidden overflow-y-hidden w-full max-w-[1440px] mx-auto"
           >
-            <div class="relative">
-              <div
-                ref="activeCount"
-                class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
-              >
-                <img src="/img/01.png" alt="01" />
-              </div>
-              <p
-                ref="inactiveCount"
-                class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
-              >
-                01
-              </p>
-            </div>
-
             <div
-              ref="activeText"
-              class="activeText flex flex-col translate-y-28 pr-8 pt-10 pb-16 mt-40"
+              class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
             >
-              <h3
-                class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/01.png" alt="01" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  01
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-28 pr-8 pt-10 pb-16 mt-40"
               >
-                Tender Writing
-              </h3>
-              <!-- <p class="text-lg my-2">
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+                >
+                  Tender Writing
+                </h3>
+                <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-              <p class="cardDesc text-2xl text-grey-3">
-                Choose from flexible payment options, bulk Purchases
-              </p>
+                <p class="cardDesc text-2xl text-grey-3">
+                  Choose from flexible payment options, bulk Purchases
+                </p>
+              </div>
+            </div>
+            <div
+              class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+            >
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/02.png" alt="02" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  02
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-28 pr-8 py-10 mt-36"
+              >
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+                >
+                  Tender Sourcing
+                </h3>
+                <!-- <p class="text-lg my-2">
+            We provide:
+          </p> -->
+                <p class="cardDesc text-2xl text-grey-3">
+                  Find suitable tenders or your organisation TODAY! Call us or
+                  sign up to your portal.
+                </p>
+              </div>
+            </div>
+            <div
+              class="childItem bg-transparent border pt-10 border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+            >
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/03.png" alt="03" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  03
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-40 pr-8 py-10 mt-20"
+              >
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-6 max-w-[160px]"
+                >
+                  Market Analysis (Commissioned analytics)
+                </h3>
+                <!-- <p class="text-lg my-2">
+            We provide:
+          </p> -->
+                <p class="cardDesc text-2xl text-grey-3">
+                  Gain insights to stay ahead and access new market for the
+                  growth and sustainability of your business
+                </p>
+              </div>
             </div>
           </div>
           <div
-            class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+            ref="secondSlide"
+            class="child absolute flex flex-col md:flex-row gap-2.5 overflow-x-hidden overflow-y-hidden w-full max-w-[1440px] mx-auto translate-x-[110%]"
           >
-            <div class="relative">
-              <div
-                ref="activeCount"
-                class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
-              >
-                <img src="/img/02.png" alt="02" />
-              </div>
-              <p
-                ref="inactiveCount"
-                class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
-              >
-                02
-              </p>
-            </div>
-
             <div
-              ref="activeText"
-              class="activeText flex flex-col translate-y-28 pr-8 py-10 mt-36"
+              class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
             >
-              <h3
-                class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/04.png" alt="01" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  04
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-28 pr-8 pt-10 pb-16 mt-40"
               >
-                Tender Sourcing
-              </h3>
-              <!-- <p class="text-lg my-2">
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+                >
+                  Quality compliance support
+                </h3>
+                <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-              <p class="cardDesc text-2xl text-grey-3">
-                Find suitable tenders or your organisation TODAY! Call us or
-                sign up to your portal.
-              </p>
-            </div>
-          </div>
-          <div
-            class="childItem bg-transparent border pt-10 border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
-          >
-            <div class="relative">
-              <div
-                ref="activeCount"
-                class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
-              >
-                <img src="/img/03.png" alt="03" />
+                <p class="cardDesc text-2xl text-grey-3">
+                  Ensure that you are adhering to all regulatory guideline to a and maintain public contracts
+                </p>
               </div>
-              <p
-                ref="inactiveCount"
-                class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
-              >
-                03
-              </p>
             </div>
-
             <div
-              ref="activeText"
-              class="activeText flex flex-col translate-y-40 pr-8 py-10 mt-20"
+              class="childItem pt-10 bg-transparent border border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
             >
-              <h3
-                class="text-grey-7 text-[24px] font-medium mb-6 max-w-[160px]"
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/05.png" alt="02" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  05
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-28 pr-8 py-10 mt-36"
               >
-                Market Analysis (Commissioned analytics)
-              </h3>
-              <!-- <p class="text-lg my-2">
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-4 max-w-[160px]"
+                >
+                  Training (Workshops)
+                </h3>
+                <!-- <p class="text-lg my-2">
             We provide:
           </p> -->
-              <p class="cardDesc text-2xl text-grey-3">
-                Gain insights to stay ahead and access new market for the growth
-                and sustainability of your business
-              </p>
+                <p class="cardDesc text-2xl text-grey-3">
+                  Improve your service delivery by ensure tasks are completed a
+                </p>
+              </div>
             </div>
+            <!-- <div
+              class="childItem bg-transparent border pt-10 border-l-[4px] items-start border-l-grey-7 border-transparent text-grey-3 rounded-r-lg min-w-[343px] w-[343px] flex flex-col md:min-w-[400px] md:w-[400px] pl-[20px] relative overflow-hidden h-[412px]"
+            >
+              <div class="relative">
+                <div
+                  ref="activeCount"
+                  class="activeCount absolute w-[65px] h-[65px] flex items-center justify-center letter border border-blue-6 min-w-max bg-white rounded-lg px-[15px] py-[11px] invisible"
+                >
+                  <img src="/img/03.png" alt="03" />
+                </div>
+                <p
+                  ref="inactiveCount"
+                  class="inactiveCount cabinet absolute w-[65px] h-[65px] flex items-center justify-center text-[32px] font-bold text-grey-7"
+                >
+                  06
+                </p>
+              </div>
+
+              <div
+                ref="activeText"
+                class="activeText flex flex-col translate-y-40 pr-8 py-10 mt-20"
+              >
+                <h3
+                  class="text-grey-7 text-[24px] font-medium mb-6 max-w-[160px]"
+                >
+                  Market Analysis (Commissioned analytics)
+                </h3>
+                <p class="cardDesc text-2xl text-grey-3">
+                  Gain insights to stay ahead and access new market for the
+                  growth and sustainability of your business
+                </p>
+              </div>
+            </div> -->
           </div>
         </div>
-        <button class="bg-blue-4/10 h-[410px] w-[42px]">
+        <button v-if="hideLeftShowRight" @click="slideFromRight" class="bg-blue-4/10 h-[410px] w-[42px]">
           <img src="/svg/left-arrow.svg" alt="arrow-left" />
         </button>
       </div>
@@ -279,12 +416,12 @@ li::before {
   // width: 343px;
   // min-width: 343px;
   // @media (min-width: 768px) {
-  //   width: 606px;
-  //   min-width: 606px;
+  //   width: 558px;
+  //   min-width: 558px;
   // }
   h3 {
     color: $blue-9;
-    // width: 606px;
+    // width: 558px;
     // font-size: 32px;
     // font-weight: bold;
     // width: auto;

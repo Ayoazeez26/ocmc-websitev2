@@ -1,10 +1,10 @@
 <template>
   <div
-    class="fixed right-0 left-0 top-0 font-medium text-white z-10 px-4 md:px-6 xl:px-0"
-    :class="dataStore.scrolled ? 'bg-blue nav-bg py-0' : 'bg-transparent py-6 mt-10'"
+    class="bg-blue fixed right-0 left-0 top-0 py-6 font-medium text-white z-10 backdrop-blur-[28px] px-4 md:px-6 xl:px-0"
+    :class="dataStore.scrolled ? 'py-0' : ''"
   >
     <div
-      class="nav-bg flex h-24 md:h-[88px] items-center justify-between px-6 px-md-0 w-full max-w-[1240px] rounded-xl mx-auto"
+      class="nav-bg backdrop-blur-[28px] flex h-24 md:h-[88px] items-center justify-between px-6 px-md-0 w-full max-w-[1240px] rounded-xl mx-auto"
     >
       <nuxt-link to="/">
         <img class="w-[50px] md:w-20 h-[50px] md:h-20" src="/svg/logo.svg" />
@@ -14,7 +14,7 @@
           herf="https://healthandsocialcaretenders.co.uk/"
           class="hidden md:block bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2"
         >
-          Visit Portal
+          Visit Tender Portal
         </a>
         <button ref="hamburger" class="lg:hidden" @click="open = !open">
           <Icon name="ic:round-menu" size="24px" color="#FFF" />
@@ -38,7 +38,7 @@
         </div>
         <ul
           v-if="!open"
-          class="flex flex-col lg:flex-row lg:items-center gap-4 mt-10 lg:mt-0 lg:gap-10"
+          class="flex flex-col cabinet text-whiter lg:flex-row lg:items-center gap-4 mt-10 lg:mt-0 lg:gap-10"
         >
           <!-- <li @click="open = !open"><nuxt-link to="/">Home</nuxt-link></li> -->
           <!-- <li @click="careServicesToggled">
@@ -79,7 +79,7 @@
             >
               Services
               <Icon
-                class="ml-1"
+                class="mb-0.5"
                 name="ic:round-keyboard-arrow-down"
                 size="24px"
                 color="#FFFFFF"
@@ -97,7 +97,7 @@
             <nuxt-link
               to="/blog"
               :class="route.name === 'blog' ? 'text-blue-4' : ''"
-              >Webinars</nuxt-link
+              >Ecommerce</nuxt-link
             >
           </li>
           <div
@@ -106,7 +106,7 @@
             <button
               class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2"
             >
-              Visit Portal
+              Visit Tender Portal
             </button>
           </div>
         </ul>
@@ -162,9 +162,9 @@
       </ul>
       <div class="hidden lg:flex">
         <button
-          class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2 w-[177px]"
+          class="bg-white border-2 border-white font-semibold px-4 py-3 rounded text-blue-2 leading-7 tracking-[0.032] w-[177px]"
         >
-          Visit Portal
+          Visit Tender Portal
         </button>
       </div>
     </div>
