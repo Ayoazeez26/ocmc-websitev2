@@ -38,7 +38,6 @@ const newCardItem = (el) => {
     setActive(DOM);
   });
   DOM.el.addEventListener("mouseleave", () => {
-    console.log("left");
     setInactive(DOM);
   });
   // console.log("DOM is => ", DOM);
@@ -46,7 +45,6 @@ const newCardItem = (el) => {
 };
 
 const setActive = (item) => {
-  console.log("entered", item.el);
   const TLLOAD = $gsap.timeline({
     default: {
       ease: "easeInOut",

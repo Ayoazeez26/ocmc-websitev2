@@ -2,17 +2,28 @@
 const resource = ref("Books");
 const services = ref([
   {
-    name: "Best Practices For Providing Domicillary Care",
-    image: "book-practice",
-    link: "https://www.amazon.com/PRACTICES-PROVIDING-DOMICILIARY-SUPPORTED-SCHEMES-ebook/dp/B0CG4X4KS1",
+    name: "Bridging the gap",
+    image: "bridging-the-gap",
   },
   {
-    name: "bridging the gap",
-    image: "book-mockup",
+    name: "Transformative Practices",
+    image: "transformative",
   },
   {
-    name: "Social care business management explained",
-    image: "book-social",
+    name: "Navigating the Dynamics",
+    image: "navigating",
+  },
+  {
+    name: "Strategies for Social Well-being",
+    image: "strategies",
+  },
+  {
+    name: "A Guide to Ethical Leadership",
+    image: "leadership",
+  },
+  {
+    name: "The Blueprint for Success",
+    image: "bridging-the-gap",
   },
 ]);
 const videos = ref([
@@ -49,119 +60,122 @@ const posts = ref([
 </script>
 <template>
   <div
-    class="flex flex-col items-center mx-auto px-4 md:px-6 xl:px-0 w-full max-w-[1240px]"
+    class="flex flex-col items-center mx-auto px-4 py-28 md:px-6 xl:px-0 w-full max-w-[1304px]"
   >
     <div
       class="flex flex-col lg:flex-row lg:items-center justify-between w-full"
     >
       <div class="">
         <h2
-          class="font-bold leading-[48px] w-[200px] md:w-auto lg:leading-[54px] tracking-[-1.5px] text-[32px] lg:text-[48px]"
+          class="font-semibold text-grey-5 leading-[48px] w-[200px] md:w-auto lg:leading-[54px] tracking-[-1.5px] text-[32px] lg:text-[40px]"
         >
-          Level Up with <span class="text-blue-4">Our Resources</span>
+          Stay Informed with OCMC
         </h2>
+        <p class="text-grey-6 mt-1">Gain insights for the Changing Landscape</p>
       </div>
-      <div class="flex mt-8 lg:mt-0 overflow-x-auto">
+      <div
+        class="bg-light-green px-[73.5px] py-[22.5px] flex mt-8 gap-[34px] lg:mt-0 overflow-x-auto"
+      >
+        <button
+          @click="resource = 'All'"
+          class="py-1 border-b-4"
+          :class="
+            resource === 'All'
+              ? 'text-blue-4 border-blue-4 font-semibold'
+              : 'border-light-green text-grey-8'
+          "
+        >
+          All resources
+        </button>
         <button
           @click="resource = 'Books'"
-          class="px-10 py-4"
+          class="py-1 border-b-4"
           :class="
-            resource === 'Books' ? 'bg-blue-4 text-white  font-semibold' : ''
+            resource === 'Books'
+              ? 'text-blue-4 border-blue-4 font-semibold'
+              : 'border-light-green text-grey-8'
           "
         >
           Books
         </button>
         <button
           @click="resource = 'Videos'"
-          class="px-10 py-4"
+          class="py-1 border-b-4"
           :class="
-            resource === 'Videos' ? 'bg-blue-4 text-white  font-semibold' : ''
+            resource === 'Videos'
+              ? 'text-blue-4 border-blue-4 font-semibold'
+              : 'border-light-green text-grey-8'
           "
         >
           Videos
         </button>
         <button
           @click="resource = 'Blog'"
-          class="px-10 py-4"
+          class="py-1 border-b-4"
           :class="
-            resource === 'Blog' ? 'bg-blue-4 text-white  font-semibold' : ''
+            resource === 'Blog'
+              ? 'text-blue-4 border-blue-4 font-semibold'
+              : 'border-light-green text-grey-8'
           "
         >
           Blog
         </button>
       </div>
     </div>
-    <div v-if="resource === 'Books'" class="w-full">
-      <div class="flex justify-center mt-10">
+    <div v-show="resource === 'Books'" class="w-full">
+      <div class="flex justify-center mt-10 w-full">
         <div
-          class="flex flex-col lg:flex-row md:items-stretch justify-center flex-wrap gap-10 lg:gap-2"
+          class="flex flex-col lg:flex-row md:items-stretch justify-center flex-wrap gap-10 lg:gap-8"
         >
           <div
             v-for="(service, idx) in services"
             :key="idx"
-            class="flex flex-col w-full xl:h-full lg:w-[408px]"
+            class="flex flex-col gap-6 w-full lg:w-[398px]"
           >
-            <img
-              class="w-full"
-              :src="`https://s3.eu-west-2.amazonaws.com/ocmc-img.com/${service.image}.png`"
-            />
+            <img class="w-full" :src="`/img/${service.image}.png`" />
             <div
-              class="flex items-start xl:h-full px-6 py-8 border bg-blue-2 text-white border-blue-2"
+              class="border border-grey-10 flex items-start px-6 py-8"
             >
-              <div class="flex flex-col justify-between w-full xl:h-full">
-                <h3
-                  class="font-semibold text-[22px] text-white tracking-[-0.2px] uppercase"
-                >
-                  {{ service.name }}
-                </h3>
+              <div class="flex justify-between w-full ">
+                <div class="flex flex-col">
+                  <h3 class="font-medium text-grey-9">
+                    {{ service.name }}
+                  </h3>
+                  <div class="flex items-center mt-[10px] gap-[5px]">
+                    <img src="/svg/book.svg" alt="book icon" />
+                    <h4 class="text-blue-5 text-2xl font-medium">Books</h4>
+                  </div>
+                </div>
                 <!-- <p
                   class="cut-text text-lg leading-[28px] font-medium max-h-14 mt-4 text-ellipsis overflow-hidden block"
                 >
                   {{ service.title }}
                 </p> -->
-                <div class="mt-10 self-end flex w-full">
-                  <template v-if="service.link">
-                    <a
-                      :href="service.link"
-                      target="_blank"
-                      class="bg-blue-4 text-center text-white rounded p-4 w-full"
-                    >
-                      Get Now!!
-                    </a>
-                  </template>
-                  <template v-else>
-                    <nuxt-link
-                      to="/ebooks"
-                      class="bg-blue-4 text-center text-white rounded p-4 w-full"
-                    >
-                      Learn More
-                    </nuxt-link>
-                  </template>
-                  <!-- <nuxt-link
-                    to="/ebooks"
-                    class="bg-blue-4 text-center text-white rounded p-4 w-full"
-                  >
-                    Learn More
-                  </nuxt-link> -->
+                <div class="flex items-center justify-center">
+                  <nuxt-link to="/ebooks" class="border border-grey-11 rounded-2xl py-4 px-6">
+                    <Icon
+                      class="-rotate-45"
+                      name="mdi:arrow-right"
+                      size="24px"
+                      color="#404968"
+                    />
+                  </nuxt-link>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <div class="flex mt-10 justify-center">
-        <nuxt-link to="/ebooks" class="text-blue-4 blue-btn rounded py-4 px-8">
-          See More
-          <Icon
-            class="hovered ml-3"
-            name="mdi:arrow-right"
-            size="18px"
-            color="#0073FF"
-          />
+      <div class="flex mt-[71px] justify-center">
+        <nuxt-link
+          to="/ebooks"
+          class="text-blue-4 blue-btn rounded py-4 px-8 w-[329px] text-center bg-whiter border border-black/20"
+        >
+          See all
         </nuxt-link>
       </div>
     </div>
-    <div v-else-if="resource === 'Videos'" class="w-full">
+    <div v-show="resource === 'Videos'" class="w-full">
       <div class="flex justify-center mt-10">
         <div
           class="flex flex-col lg:flex-row justify-center flex-wrap gap-10 lg:gap-6"
@@ -179,11 +193,7 @@ const posts = ref([
               class="flex items-center px-4 py-8 border bg-blue-2 text-white border-blue-2"
             >
               <div class="flex items-center w-full gap-x-4">
-                <img
-                  class="h-10 w-10"
-                  src="/img/play.png"
-                  alt="play picture"
-                />
+                <img class="h-10 w-10" src="/img/play.png" alt="play picture" />
                 <p
                   class="cut-text text-lg leading-[28px] font-medium max-h-14 text-ellipsis overflow-hidden block"
                 >
@@ -206,7 +216,7 @@ const posts = ref([
         </nuxt-link>
       </div>
     </div>
-    <div v-else class="">
+    <div v-show="resource === 'Blog'" class="">
       <div class="flex flex-col lg:flex-row gap-10 mt-10">
         <nuxt-link to="/blog/id" class="w-full max-w-[612px]">
           <img

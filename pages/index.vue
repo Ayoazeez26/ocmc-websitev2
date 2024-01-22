@@ -8,9 +8,9 @@
     <HomeBanner />
     <HomeServices />
     <HomeAbout />
+    <HomeResources />
     <HomeTestimonials />
     <HomeTeam />
-    <HomeEbooks />
     <HomeEnroll />
     <!-- <HomeVideos /> -->
   </div>
