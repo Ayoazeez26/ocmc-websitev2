@@ -16,9 +16,10 @@
 <template>
   <div class="body">
     <main>
-      <NuxtPage />
+      <!-- <NuxtPage /> -->
+      <HomeComingSoon />
     </main>
-    <AppFooter />
+    <!-- <AppFooter /> -->
   </div>
 </template>
 <style lang="scss">
